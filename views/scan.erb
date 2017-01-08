@@ -1,0 +1,38 @@
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+         <div class="container">
+        <!--         <a class="btn btn-default" href="./scan">一覧取得</a>
+                 <a class="btn btn-default" href="./save">保存</a>
+        -->
+                 <form method="post" action="./save">
+                 <input type="submit" class="btn btn-default" value="保存">
+         </div>
+         <h2 class="sub-header">スキャン結果</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>IPアドレス</th>
+                  <th>MACアドレス</th>
+                  <th>NICメーカ</th>
+                  <th>メモ</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <% @view.each_with_index do |arplist, i| %>
+                  <% unless Ipaddresslist.find_by(ipaddr: arplist[0]) %>
+                    <tr class="danger">
+                  <% else %>
+                    <tr>
+                  <% end %>
+                      <td><input type="checkbox" name="check<%= i %>" value="<%= i %>"></td>
+                      <td><%= arplist[0] %></td>
+                      <td><%= arplist[1] %></td>
+                      <td><%= arplist[2] %></td>
+                      <td><input type="text" class="form-control" name= "memo<%= i %>" value =""></td>
+                    </tr>
+                 <% end %>
+              </tbody>
+            </table>
+               </form>
+          </div>

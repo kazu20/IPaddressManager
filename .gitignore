@@ -1,4 +1,6 @@
+.DS_Store
+.active
+Gemfile.lock
 db/development.sqlite3
 db/test.sqlite3
 db/schema.rb
-

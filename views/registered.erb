@@ -3,7 +3,7 @@
             <input type="submit" class="btn btn-default" value="更新">
          <h2 class="sub-header">登録済みIPアドレス一覧</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table  class="table table-striped">
               <thead>
                 <tr>
                   <th>削除</th>
@@ -14,17 +14,16 @@
                 </tr>
               </thead>
               <tbody>
-                <% @Registlist.each_with_index do |tmp, i|%>
+                <% registlist.each_with_index do |tmp, i|%>
                 <tr>
                   <td><input type="checkbox" name="check<%= i %>" value="<%= i %>"</td>
-                  <td><%= tmp.ipaddr %></td>
-		  <td><%= tmp.macaddr %></td>
-                  <td><%= tmp.maker %></td>
-                  <td><input type="text" class="form-control" name="memo<%= i %>" value="<%= tmp.memo %>"></td>
+                  <td><%= tmp[:ipaddr] %></td>
+		              <td><%= tmp[:macaddr] %></td>
+                  <td><%= tmp[:maker] %></td>
+                  <td><input type="text" class="form-control" name="memo<%= i %>" value="<%= tmp[:memo] %>"></td>
                 </tr>
                 <% end %>
               </tbody>
             </table>
            </form>
           </div>
-

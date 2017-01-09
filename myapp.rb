@@ -3,6 +3,7 @@ require './arplist.rb'
 require './model/Ipaddresslist.rb'
 require 'sinatra'
 require 'active_record'
+require 'ipaddr'
 
 get '/' do
   erb :index
@@ -22,8 +23,22 @@ get '/scan' do
 end
 
 get '/registered' do
-  @Registlist = Ipaddresslist.all
-  erb :registered
+  Registlist = Ipaddresslist.all
+  Regist_hash = []
+  Registlist.each do |r|
+    Regist_hash << { :ipaddr  => IPAddr.new(r.ipaddr),
+                      :macaddr => r.macaddr,
+                      :maker   => r.maker,
+                      :memo    => r.memo }
+  end
+
+
+
+  Regist_hash.sort! do |a,b|
+    a[:ipaddr] <=> b[:ipaddr]
+  end
+
+  erb :registered, :locals => {:registlist => Regist_hash}
 end
 
 post '/save' do
@@ -31,17 +46,17 @@ post '/save' do
   @Save.each_with_index do |savelist, i|
     memo_index = "memo" + i.to_s
     check_index = "check" + i.to_s
-    if params[check_index] then
+    unless params[memo_index].blank? then
       ipaddresslist = Ipaddresslist.new(:ipaddr  => savelist.ipaddr,
                                         :macaddr => savelist.macaddr,
                                         :maker   => savelist.maker,
                                         :memo    => params[memo_index])
       ipaddresslist.save unless Ipaddresslist.find_by(ipaddr: savelist.ipaddr)
-      unless params[memo_index].blank?
-         ipaddr = Ipaddresslist.find_by(ipaddr: savelist.ipaddr)
-         ipaddr.memo = params[memo_index]
-         ipaddr.save
-      end
+      #unless params[memo_index].blank?
+      #   ipaddr = Ipaddresslist.find_by(ipaddr: savelist.ipaddr)
+      #   ipaddr.memo = params[memo_index]
+      #   ipaddr.save
+      #end
     end
   end
 

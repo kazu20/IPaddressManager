@@ -1,4 +1,5 @@
 #!/bin/bash
+source config/NetworkInterface.cnf
 
-sudo arp-scan -l -interface en0 |grep ^[0-9]|grep -v packet
+sudo arp-scan -l --interface $NetworkInterface |grep ^[0-9]|grep -v packet
 

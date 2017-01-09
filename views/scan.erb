@@ -1,8 +1,5 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
          <div class="container">
-        <!--         <a class="btn btn-default" href="./scan">一覧取得</a>
-                 <a class="btn btn-default" href="./save">保存</a>
-        -->
                  <form method="post" action="./save">
                  <input type="submit" class="btn btn-default" value="保存">
          </div>
@@ -19,20 +16,26 @@
                 </tr>
               </thead>
               <tbody>
-                 <% @view.each_with_index do |arplist, i| %>
+                  <% @view.each_with_index do |arplist, i| %>
                   <% unless Ipaddresslist.find_by(ipaddr: arplist[0]) %>
                     <tr class="danger">
-                  <% else %>
-                    <tr>
-                  <% end %>
-                      <td><input type="checkbox" name="check<%= i %>" value="<%= i %>"></td>
+                      <td></td>
                       <td><%= arplist[0] %></td>
                       <td><%= arplist[1] %></td>
                       <td><%= arplist[2] %></td>
                       <td><input type="text" class="form-control" name= "memo<%= i %>" value =""></td>
+                  <% else %>
+                    <tr>
+                      <% registmemo = Ipaddresslist.find_by(ipaddr: arplist[0]) %>
+                      <td></td>
+                      <td><%= arplist[0] %></td>
+                      <td><%= arplist[1] %></td>
+                      <td><%= arplist[2] %></td>
+                      <td><%= Ipaddresslist.find_by(ipaddr: arplist[0]).memo %></td>
+                  <% end %>
                     </tr>
                  <% end %>
               </tbody>
-            </table>
-               </form>
+              </table>
+             </form>
           </div>

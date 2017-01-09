@@ -5,9 +5,6 @@ ActiveRecord::Base.establish_connection(
 )
 
 class Ipaddresslist < ActiveRecord::Base
-  def hoge
-     p "hoge"
-  end
 end
 
 class Tmplist < ActiveRecord::Base

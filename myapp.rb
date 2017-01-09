@@ -52,11 +52,6 @@ post '/save' do
                                         :maker   => savelist.maker,
                                         :memo    => params[memo_index])
       ipaddresslist.save unless Ipaddresslist.find_by(ipaddr: savelist.ipaddr)
-      #unless params[memo_index].blank?
-      #   ipaddr = Ipaddresslist.find_by(ipaddr: savelist.ipaddr)
-      #   ipaddr.memo = params[memo_index]
-      #   ipaddr.save
-      #end
     end
   end
 

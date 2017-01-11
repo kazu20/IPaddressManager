@@ -10,52 +10,22 @@ get '/' do
 end
 
 get '/scan' do
-  ret = ArpList.new
-  @view =  ret.getlist
-  @view.each do |iplist|
-    tmplist = Tmplist.new(:ipaddr  => iplist[0],
-                          :macaddr => iplist[1],
-                          :maker   => iplist[2],
-                          :memo    => iplist[3])
-    tmplist.save unless Tmplist.find_by(ipaddr: iplist[0])
-  end
-  erb :scan
+  na = NetworkAdministrator.new
+  view = na.getArpList
+  erb :scan, :locals => {:view => view}
 end
 
 get '/registered' do
-  Registlist = Ipaddresslist.all
-  Regist_hash = []
-  Registlist.each do |r|
-    Regist_hash << { :ipaddr  => IPAddr.new(r.ipaddr),
-                      :macaddr => r.macaddr,
-                      :maker   => r.maker,
-                      :memo    => r.memo }
-  end
+  na = NetworkAdministrator.new
+  regist_hash = na.getRegisteredIPAddress
 
-
-
-  Regist_hash.sort! do |a,b|
-    a[:ipaddr] <=> b[:ipaddr]
-  end
-
-  erb :registered, :locals => {:registlist => Regist_hash}
+  erb :registered, :locals => {:registlist => regist_hash}
 end
 
 post '/save' do
-  @Save = Tmplist.all
-  @Save.each_with_index do |savelist, i|
-    memo_index = "memo" + i.to_s
-    check_index = "check" + i.to_s
-    unless params[memo_index].blank? then
-      ipaddresslist = Ipaddresslist.new(:ipaddr  => savelist.ipaddr,
-                                        :macaddr => savelist.macaddr,
-                                        :maker   => savelist.maker,
-                                        :memo    => params[memo_index])
-      ipaddresslist.save unless Ipaddresslist.find_by(ipaddr: savelist.ipaddr)
-    end
-  end
+  na = NetworkAdministrator.new
+  na.setRegisterdIPaddress(params)
 
-  Tmplist.delete_all
   redirect to('/registered')
 end
 
@@ -66,7 +36,6 @@ post '/update' do
     check_index = "check" + i.to_s
     updatelist.memo = params[memo_index]
     updatelist.destroy if params[check_index]
-    updatelist.save
   end
   redirect to('/registered')
 end

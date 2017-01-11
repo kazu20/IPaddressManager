@@ -16,7 +16,7 @@
                 </tr>
               </thead>
               <tbody>
-                  <% @view.each_with_index do |arplist, i| %>
+                  <% view.each_with_index do |arplist, i| %>
                   <% unless Ipaddresslist.find_by(ipaddr: arplist[0]) %>
                     <tr class="danger">
                       <td></td>

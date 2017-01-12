@@ -16,7 +16,8 @@
               <tbody>
                 <% registlist.each_with_index do |tmp, i|%>
                 <tr>
-                  <td><input type="checkbox" name="check<%= i %>" value="<%= i %>"</td>
+                  <input type="hidden" name="select<%= i %>" value="<%= tmp[:ipaddr] %>">
+                  <td><input type="checkbox" name="check<%= i %>"</td>
                   <td><%= tmp[:ipaddr] %></td>
 		              <td><%= tmp[:macaddr] %></td>
                   <td><%= tmp[:maker] %></td>

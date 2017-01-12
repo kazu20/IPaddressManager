@@ -34,15 +34,15 @@ post '/update' do
   @Registlist.each_with_index do |updatelist, i|
     memo_index = "memo" + i.to_s
     check_index = "check" + i.to_s
-    select_index = "select" + i.to_s
+    select_ipaddress = "select" + i.to_s
     if params[memo_index] then
-      ret = Ipaddresslist.find_by(:ipaddr => params[select_index])
+      ret = Ipaddresslist.find_by(:ipaddr => params[select_ipaddress])
       ret.memo = params[memo_index]
       ret.save
     end
 
     if params[check_index] then
-      ret = Ipaddresslist.find_by(:ipaddr => params[select_index])
+      ret = Ipaddresslist.find_by(:ipaddr => params[select_ipaddress])
       ret.destroy
     end
   end

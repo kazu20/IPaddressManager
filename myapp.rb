@@ -5,33 +5,30 @@ require 'sinatra'
 require 'active_record'
 require 'ipaddr'
 
+before do
+  @na = NetworkAdministrator.new
+end
+
 get '/' do
   erb :index
 end
 
 get '/scan' do
-  na = NetworkAdministrator.new
-  view = na.getArpList
+  view = @na.getArpList
   erb :scan, :locals => {:view => view}
 end
 
 get '/registered' do
-  na = NetworkAdministrator.new
-  regist_hash = na.getRegisteredIPAddress
-
+  regist_hash = @na.getRegisteredIPAddress
   erb :registered, :locals => {:registlist => regist_hash}
 end
 
 post '/save' do
-  na = NetworkAdministrator.new
-  na.setRegisterdIPaddress(params)
-
+  @na.setRegisterdIPaddress(params)
   redirect to('/registered')
 end
 
 post '/update' do
-  na = NetworkAdministrator.new
-  na.updateIPAddress(params)
-
+  @na.updateIPAddress(params)
   redirect to('/registered')
 end

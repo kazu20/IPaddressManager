@@ -81,7 +81,4 @@ class NetworkAdministrator
     end
   end
 
-  def modifyIPAddress(params)
-  end
-
 end

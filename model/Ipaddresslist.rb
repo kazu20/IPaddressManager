@@ -31,6 +31,7 @@ class NetworkAdministrator
     return arpList
   end
 
+
   def getRegisteredIPAddress
     ipaddresslist = Ipaddresslist.all
     regist_hash = []
@@ -46,6 +47,7 @@ class NetworkAdministrator
     return regist_hash
   end
 
+
   def setRegisterdIPaddress(params)
     save = Tmplist.all
     save.each_with_index do |savelist, i|
@@ -57,10 +59,10 @@ class NetworkAdministrator
                                           :memo    => params[memo_index])
         ipaddresslist.save unless Ipaddresslist.find_by(ipaddr: savelist.ipaddr)
       end
+    end
+    Tmplist.delete_all
   end
 
-  Tmplist.delete_all
-  end
 
   def updateIPAddress(params)
     registlist = Ipaddresslist.all
@@ -68,6 +70,7 @@ class NetworkAdministrator
       memo_index       = "memo"   + i.to_s
       check_index      = "check"  + i.to_s
       select_ipaddress = "select" + i.to_s
+
       if params[memo_index] then
         ret = Ipaddresslist.find_by(:ipaddr => params[select_ipaddress])
         ret.memo = params[memo_index]

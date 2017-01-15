@@ -1,5 +1,4 @@
 require 'sinatra'
-require './arplist.rb'
 require './model/Ipaddresslist.rb'
 require 'sinatra'
 require 'active_record'

@@ -65,8 +65,8 @@ class NetworkAdministrator
   def updateIPAddress(params)
     registlist = Ipaddresslist.all
     registlist.each_with_index do |updatelist, i|
-      memo_index = "memo" + i.to_s
-      check_index = "check" + i.to_s
+      memo_index       = "memo"   + i.to_s
+      check_index      = "check"  + i.to_s
       select_ipaddress = "select" + i.to_s
       if params[memo_index] then
         ret = Ipaddresslist.find_by(:ipaddr => params[select_ipaddress])

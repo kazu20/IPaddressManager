@@ -13,6 +13,7 @@ end
 class NetworkAdministrator
 
   def getArpList
+    Tmplist.delete_all
     arpList = []
     ret  = `./get_arp.sh`
     retEachLine = ret.chomp.split("\n")
